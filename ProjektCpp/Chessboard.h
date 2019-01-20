@@ -2,12 +2,13 @@
 #include "Field.h"
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
-class Chesboard
+class Chessboard
 {
 public:
-	Chesboard();
-	~Chesboard();
+	Chessboard();
+	~Chessboard();
 
 	Field findKnight();
 	Field findKing();

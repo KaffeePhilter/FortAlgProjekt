@@ -111,7 +111,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\0_HTW\2_WiSe1819\Algorithmen\Laborübungen\Projekt\ProjektCpp</AdditionalLibraryDirectories>
       <AdditionalDependencies>GraphLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Chesboard.cpp" />
+    <ClCompile Include="Chessboard.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
@@ -163,7 +162,7 @@
     <ClCompile Include="ProjektCpp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Chesboard.h" />
+    <ClInclude Include="Chessboard.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
