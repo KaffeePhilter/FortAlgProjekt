@@ -12,7 +12,7 @@ public:
 
 	Field findKnight();
 	Field findKing();
-	void initialize(std::ifstream file);
+	void initialize(std::ifstream& file);
 	std::stringstream draw();
 };
 
