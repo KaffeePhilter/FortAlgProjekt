@@ -2,6 +2,7 @@
 #include "Field.h"
 #include <sstream>
 #include <iostream>
+
 class Chesboard
 {
 public:
