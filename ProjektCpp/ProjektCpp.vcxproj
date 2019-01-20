@@ -175,6 +175,12 @@
       <Project>{85267ac2-b5e3-4304-9b0b-852e0d4dbd11}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Board1.txt" />
+    <Text Include="..\..\Board2.txt" />
+    <Text Include="..\..\Board3.txt" />
+    <Text Include="..\..\Board4.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

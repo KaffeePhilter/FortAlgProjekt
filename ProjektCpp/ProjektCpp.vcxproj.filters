@@ -57,4 +57,18 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Board1.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="..\..\Board2.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="..\..\Board3.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+    <Text Include="..\..\Board4.txt">
+      <Filter>Ressourcendateien</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
