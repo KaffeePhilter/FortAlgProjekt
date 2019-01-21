@@ -3,7 +3,8 @@
 class King : public Piece
 {
 public:
-	King();
-	~King();
+	King() : Piece() {}
+
+	std::stringstream draw();
 };
 
