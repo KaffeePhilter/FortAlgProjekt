@@ -29,16 +29,11 @@ void Chessboard::initialize(std::ifstream& file)
 		char nextChar = file.get();
 		int pos = 0;
 
-		switch (nextChar)
-		{
-		case 's':
+		auto getPos = [&] () {
 			switch (file.get())
 			{
 			case 'a':
 				pos += file.get();
-				m_board[pos] = new Field();
-				Knight* k();
-				m_board[pos]->setPiece(k);
 				break;
 			case 'b':
 				pos += 8 + file.get();
@@ -67,6 +62,14 @@ void Chessboard::initialize(std::ifstream& file)
 
 				break;
 			}
+			return pos;
+		};
+
+		switch (nextChar)
+		{
+		case 's':
+			Knight* k();
+			m_board[getPos()]->setPiece(k);
 			break;
 		case 'b':
 			break;
