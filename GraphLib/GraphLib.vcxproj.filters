@@ -15,7 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Edge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graph.h">
@@ -24,11 +30,11 @@
     <ClInclude Include="Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Edge.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
