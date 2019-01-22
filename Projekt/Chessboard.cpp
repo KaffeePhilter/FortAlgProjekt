@@ -74,6 +74,7 @@ void Chessboard::initialize(std::ifstream& file)
 		case 's':
 			// s for knight, dont ask
 			Knight* k();
+			// Im broken, FIX plx
 			m_board[getPos()]->setPiece(k);
 			break;
 		case 'b':
