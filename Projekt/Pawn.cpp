@@ -1,12 +1,6 @@
 #include "Pawn.h"
 
-
-
-Pawn::Pawn()
+std::stringstream Pawn::draw()
 {
-}
-
-
-Pawn::~Pawn()
-{
+	return std::stringstream();
 }

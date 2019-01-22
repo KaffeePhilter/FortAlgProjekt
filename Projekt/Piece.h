@@ -4,7 +4,8 @@ class Piece
 {
 public:
 	Piece();
-	~Piece();
-	std::stringstream draw();
+	virtual ~Piece();
+	
+	virtual std::stringstream draw() = 0;
 };
 

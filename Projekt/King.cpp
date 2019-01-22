@@ -1,12 +1,6 @@
 #include "King.h"
 
-
-
-King::King()
+std::stringstream King::draw()
 {
-}
-
-
-King::~King()
-{
+	return std::stringstream();
 }

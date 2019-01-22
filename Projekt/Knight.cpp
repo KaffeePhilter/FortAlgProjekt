@@ -1,16 +1,10 @@
 #include "Knight.h"
 
-
-
-Knight::Knight()
-{
-}
-
-
-Knight::~Knight()
-{
-}
-
 void Knight::move(Field target)
 {
+}
+
+std::stringstream Knight::draw()
+{
+	return std::stringstream();
 }

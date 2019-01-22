@@ -5,9 +5,9 @@
 class Knight : public Piece
 {
 public:
-	Knight();
-	~Knight();
+	Knight() : Piece() {}
 
 	void move(Field target);
+	std::stringstream draw();
 };
 
