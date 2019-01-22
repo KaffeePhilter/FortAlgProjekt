@@ -1,7 +1,9 @@
 #pragma once
 #include <sstream>
 #include "Piece.h"
-class Field
+#include "Node.h"
+
+class Field : public Node
 {
 public:
 	Field();
