@@ -2,5 +2,12 @@
 
 std::stringstream Pawn::draw()
 {
-	return std::stringstream();
+	std::stringstream draw;
+	if (getColor() == Color::Black)
+		draw << "B";
+	else if (getColor() == Color::White)
+		draw << "b";
+	else
+		draw << " ";
+	return draw;
 }

@@ -28,5 +28,7 @@ public:
 
 private:
 	BoardMap m_board;
+
+	int getPos(char posX, int posY);
 };
 

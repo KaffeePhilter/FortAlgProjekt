@@ -6,7 +6,7 @@
 class Field : public Node
 {
 public:
-	Field();
+	Field(char column, unsigned short row) : m_row(row), m_column(column) {}
 	~Field();
 
 	unsigned short getRow() { return m_row; }
