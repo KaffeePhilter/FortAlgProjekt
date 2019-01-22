@@ -11,17 +11,17 @@ public:
 
 	unsigned short getRow() { return m_row; }
 	char getColumn() { return m_column; }
-	Piece* getPiece() { return m_piece; }
+	std::shared_ptr<Piece> getPiece() { return m_piece; }
 
 	void setRow(unsigned short row) { m_row = row; }
 	void setColumn(char col) { m_column = col; }
-	void setPiece(Piece* rP) { m_piece = rP; }
+	void setPiece(const std::shared_ptr<Piece>& rP) { m_piece = rP; }
 
 	std::stringstream draw();
 private:
 	unsigned short m_row;
 	char m_column;
 
-	Piece* m_piece;
+	std::shared_ptr<Piece> m_piece;
 };
 

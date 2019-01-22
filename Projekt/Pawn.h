@@ -4,7 +4,7 @@
 class Pawn : public Piece
 {
 public:
-	Pawn() : Piece() {}
+	Pawn(Color c) : Piece(c) {}
 
 	std::stringstream draw();
 };

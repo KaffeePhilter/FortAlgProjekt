@@ -20,80 +20,111 @@ Field Chessboard::findKing()
 
 void Chessboard::initialize(std::ifstream& file)
 {
-	while (file.peek() != NULL)
+	//lambda function as a variable for some counting stuff
+	auto getPos = [&file]()
+	{
+		// interpreting the chess board as a sequence of fields,
+		// for each consecutive letter we add 8 to the count of the 
+		// next char in the file, which should be a number from 1 to 8.
+		// as a result we should get an index from 1-64 for each field, 
+		// from left to right from top to bottom.
+
+		char posX = file.get();
+		int posY = file.get() - '0';
+		int pos = 0;
+
+		switch (posX)
+		{
+		case 'a':
+			pos += posY;
+			break;
+		case 'b':
+			pos += 8 + posY;
+			break;
+		case 'c':
+			pos += 16 + posY;
+			break;
+		case 'd':
+			pos += 24 + posY;
+
+			break;
+		case 'e':
+			pos += 32 + posY;
+
+			break;
+		case 'f':
+			pos += 40 + posY;
+
+			break;
+		case 'g':
+			pos += 48 + posY;
+
+			break;
+		case 'h':
+			pos += 56 + posY;
+
+			break;
+		}
+		return pos;
+	};
+
+	while (file.peek() != file.eof())
 	{
 		char nextChar = file.get();
 		int pos = 0;
 
-		//lambda function as a variable for some counting stuff
-		auto getPos = [&]()
-		{
-			// interpreting the chess board as a sequence of fields,
-			// for each consecutive letter we add 8 to the count of the 
-			// next char in the file, which should be a number from 1 to 8.
-			// as a result we should get an index from 1-64 for each field, 
-			// from left to right from top to bottom.
-			switch (file.get())
-			{
-			case 'a':
-				pos += file.get();
-				break;
-			case 'b':
-				pos += 8 + file.get();
-				break;
-			case 'c':
-				pos += 16 + file.get();
-				break;
-			case 'd':
-				pos += 24 + file.get();
-
-				break;
-			case 'e':
-				pos += 32 + file.get();
-
-				break;
-			case 'f':
-				pos += 40 + file.get();
-
-				break;
-			case 'g':
-				pos += 48 + file.get();
-
-				break;
-			case 'h':
-				pos += 56 + file.get();
-
-				break;
-			}
-			return pos;
-		};
+		
 
 		//checks for the next char and executes different stuff 
 		switch (nextChar)
 		{
+		// s for knight, dont ask
 		case 's':
-			// s for knight, dont ask
-			Piece* k = new Knight();
-			m_board[getPos()]->setPiece(k);
+		{
+			std::shared_ptr<Piece> knight_(new Knight(Color::White));
+			m_board[getPos()]->setPiece(knight_);
 			break;
+		}
+		// b for pawn, dont ask
 		case 'b':
-			// b for pawn, dont ask
+		{
+			std::shared_ptr<Piece> pawn_(new Pawn(Color::White));
+			m_board[getPos()]->setPiece(pawn_);
 			break;
+		}
+		// k for king, yey!
 		case 'k':
-			// k for king, yey!
+		{
+			std::shared_ptr<Piece> king_(new King(Color::White));
+			m_board[getPos()]->setPiece(king_);
 			break;
+		}
+		// capital S for black knight, dont ask
 		case 'S':
-			// capital S for black knight, dont ask
+		{
+			std::shared_ptr<Piece> knight_(new Knight(Color::Black));
+			m_board[getPos()]->setPiece(knight_);
 			break;
+		}
+		// capital B for black pawn, dont ask
 		case 'B':
-			// capital B for black pawn, dont ask
+		{
+			std::shared_ptr<Piece> pawn_(new Pawn(Color::Black));
+			m_board[getPos()]->setPiece(pawn_);
 			break;
+		}
+		// capital K for black king, dont ask
 		case 'K':
-			// capital K for black king, dont ask
+		{
+			std::shared_ptr<Piece> king_(new King(Color::Black));
+			m_board[getPos()]->setPiece(king_);
 			break;
+		}
+		// komma is a seperator
 		case ',':
-			// komma is a seperator
+		{
 			continue;
+		}
 		}
 	}
 }

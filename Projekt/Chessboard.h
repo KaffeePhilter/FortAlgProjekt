@@ -2,10 +2,13 @@
 #include "Field.h"
 #include "Knight.h"
 #include "King.h"
+#include "Pawn.h"
+#include "Color.h"
 #include <sstream>
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <memory>
 
 typedef std::map<int, Field*> BoardMap;
 

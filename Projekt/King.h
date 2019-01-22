@@ -3,7 +3,7 @@
 class King : public Piece
 {
 public:
-	King() : Piece() {}
+	King(Color c) : Piece(c) {}
 
 	std::stringstream draw();
 };
