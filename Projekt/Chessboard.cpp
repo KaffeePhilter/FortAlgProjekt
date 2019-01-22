@@ -1,29 +1,43 @@
 #include "Chessboard.h"
 
-Chessboard::Chessboard()
-{
-}
-
-Chessboard::~Chessboard()
-{
-}
-
 Field Chessboard::findKnight()
 {
-	return Field('a',1);
+	for (int i = 0; i < m_board.size(); i++)
+	{
+		Piece* p = m_board[i + 1]->getPiece().get();
+		if (p != NULL)
+		{
+			std::string cmp = p->draw().str();
+			if (cmp == "s" || cmp == "S")
+				return *m_board[i + 1];
+		}
+	}
 }
 
 Field Chessboard::findKing()
 {
-	return Field('a',1);
+	for (int i = 0; i < m_board.size(); i++)
+	{
+		Piece* p = m_board[i + 1]->getPiece().get();
+		if (p != NULL)
+		{
+			std::string cmp = p->draw().str();
+			if (cmp == "k" || cmp == "K")
+			{
+				Field f = *m_board[i+1];
+				return *m_board[i + 1];
+			}
+		}
+	}
 }
 
 void Chessboard::initialize(std::ifstream& file)
 {
+	short posY = 0;
+	char posX;
+
 	for (int i = 1; i <= 64; i++)
 	{
-		char posX;
-		short posY = 1;
 		switch (i % 8)
 		{
 		case 1:
@@ -52,8 +66,7 @@ void Chessboard::initialize(std::ifstream& file)
 			posY += 1;
 			break;
 		}
-
-		m_board[i] = new Field(posY, posX);
+		m_board[i] = new Field(posX, posY);
 	}
 
 	while (!file.eof())
@@ -145,10 +158,9 @@ std::stringstream Chessboard::draw()
 	for (int i = 0; i < m_board.size(); i++)
 	{
 		draw << m_board[i + 1]->draw().str();
-		if ((i+1) % 8 == 0)
+		if ((i + 1) % 8 == 0)
 			draw << std::endl;
 	}
-
 	return draw;
 }
 
@@ -161,8 +173,6 @@ std::stringstream Chessboard::draw()
 */
 int Chessboard::getPos(char posX, int posY)
 {
-	
-
 	int pos = 0;
 
 	switch (posY)
@@ -189,7 +199,7 @@ int Chessboard::getPos(char posX, int posY)
 		pos += 48 + posX - 96;
 		break;
 	case 8:
-		pos += 54 + posX - 96;
+		pos += 56 + posX - 96;
 		break;
 	}
 	return pos;

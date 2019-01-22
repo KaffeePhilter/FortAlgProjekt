@@ -18,6 +18,7 @@ public:
 	void setPiece(const std::shared_ptr<Piece>& rP) { m_piece = rP; }
 
 	std::stringstream draw();
+	std::string toString();
 private:
 	unsigned short m_row;
 	char m_column;

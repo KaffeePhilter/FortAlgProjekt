@@ -15,8 +15,8 @@ typedef std::map<int, Field*> BoardMap;
 class Chessboard
 {
 public:
-	Chessboard();
-	~Chessboard();
+	Chessboard() {}
+	~Chessboard() {}
 
 	Field findKnight();
 	Field findKing();

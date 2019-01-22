@@ -13,3 +13,10 @@ std::stringstream Field::draw()
 		draw << "[" << m_piece.get()->draw().str() << "]";
 	return draw;
 }
+
+std::string Field::toString()
+{
+	std::stringstream s;
+	s << m_column << " | " << m_row;
+	return s.str();
+}
