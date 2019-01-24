@@ -1,5 +1,5 @@
 #include "UI.h"
-
+#include "Graph.h"
 
 
 //Vars.------------------------------
@@ -165,8 +165,6 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 	bool run = true;
 	do
 	{
-
-
 		system("CLS");
 
 		showMainMenuHead();
@@ -177,7 +175,10 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			// jump with knight
 		case 'S':
 		case 's':
-			if (rBoard.getBoard()->empty())
+		{
+			Graph knightGraph;
+
+			if (rBoard.getBoardMap()->empty())
 			{
 				std::cout << "no board loaded" << std::endl;
 				std::cout << "Press any key to return to main menu" << std::endl;
@@ -187,10 +188,18 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 
 			std::cout << rBoard.draw().str() << std::endl;
 
+			std::cout
+				<< "Press any key to start the search for the shortest path from knight to king"
+				<< std::endl;
+			std::cin.ignore();
+
+			
+
 			std::cout << "Press any key to return to main menu" << std::endl;
 			std::cin.ignore();
 
 			break;
+		}
 			//empty
 		case 'E':
 		case 'e':

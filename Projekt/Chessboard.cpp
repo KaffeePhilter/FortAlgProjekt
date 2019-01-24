@@ -2,30 +2,30 @@
 
 Field Chessboard::findKnight()
 {
-	for (int i = 0; i < m_board.size(); i++)
+	for (int i = 0; i < m_boardMap.size(); i++)
 	{
-		Piece* p = m_board[i + 1]->getPiece().get();
+		Piece* p = m_boardMap[i + 1]->getPiece().get();
 		if (p != NULL)
 		{
 			std::string cmp = p->draw().str();
 			if (cmp == "s" || cmp == "S")
-				return *m_board[i + 1];
+				return *m_boardMap[i + 1];
 		}
 	}
 }
 
 Field Chessboard::findKing()
 {
-	for (int i = 0; i < m_board.size(); i++)
+	for (int i = 0; i < m_boardMap.size(); i++)
 	{
-		Piece* p = m_board[i + 1]->getPiece().get();
+		Piece* p = m_boardMap[i + 1]->getPiece().get();
 		if (p != NULL)
 		{
 			std::string cmp = p->draw().str();
 			if (cmp == "k" || cmp == "K")
 			{
-				Field f = *m_board[i+1];
-				return *m_board[i + 1];
+				Field f = *m_boardMap[i+1];
+				return *m_boardMap[i + 1];
 			}
 		}
 	}
@@ -66,7 +66,7 @@ void Chessboard::initialize(std::ifstream& file)
 			posY += 1;
 			break;
 		}
-		m_board[i] = new Field(posX, posY);
+		m_boardMap[i] = new Field(posX, posY);
 	}
 
 	while (!file.eof())
@@ -85,7 +85,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 			
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(knight_);
+			m_boardMap[pos]->setPiece(knight_);
 			break;
 		}
 		// b for pawn, dont ask
@@ -96,7 +96,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(pawn_);
+			m_boardMap[pos]->setPiece(pawn_);
 			break;
 		}
 		// k for king, yey!
@@ -107,7 +107,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(king_);
+			m_boardMap[pos]->setPiece(king_);
 			break;
 		}
 		// capital S for black knight, dont ask
@@ -118,7 +118,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(knight_);
+			m_boardMap[pos]->setPiece(knight_);
 			break;
 		}
 		// capital B for black pawn, dont ask
@@ -129,7 +129,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(pawn_);
+			m_boardMap[pos]->setPiece(pawn_);
 			break;
 		}
 		// capital K for black king, dont ask
@@ -140,7 +140,7 @@ void Chessboard::initialize(std::ifstream& file)
 			char posY = file.get();
 
 			pos = getPos(posX, posY - 48);
-			m_board[pos]->setPiece(king_);
+			m_boardMap[pos]->setPiece(king_);
 			break;
 		}
 		// komma is a seperator
@@ -155,13 +155,28 @@ void Chessboard::initialize(std::ifstream& file)
 std::stringstream Chessboard::draw()
 {
 	std::stringstream draw;
-	for (int i = 0; i < m_board.size(); i++)
+	for (int i = 0; i < m_boardMap.size(); i++)
 	{
-		draw << m_board[i + 1]->draw().str();
+		draw << m_boardMap[i + 1]->draw().str();
 		if ((i + 1) % 8 == 0)
 			draw << std::endl;
 	}
 	return draw;
+}
+
+BoardVector * Chessboard::getBoardVector()
+{
+	int row = 1;
+	int column = 1;
+	BoardVector boardVector;
+	for (int i = 1; i <= m_boardMap.size(); i++)
+	{
+		column = ((i-1) % 8) + 1;
+		boardVector[column][row] = m_boardMap[i];
+
+		if (i % 8 == 0)
+			row++;
+	}
 }
 
 /* 

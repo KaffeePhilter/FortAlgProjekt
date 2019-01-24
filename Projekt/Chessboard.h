@@ -8,9 +8,11 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <vector>
 #include <memory>
 
 typedef std::map<int, Field*> BoardMap;
+typedef std::vector<std::vector<Field*>> BoardVector;
 
 class Chessboard
 {
@@ -24,10 +26,11 @@ public:
 	void initialize(std::ifstream& file);
 	std::stringstream draw();
 
-	BoardMap* getBoard() { return &m_board; }
+	BoardMap* getBoardMap() { return &m_boardMap; }
+	BoardVector* getBoardVector();
 
 private:
-	BoardMap m_board;
+	BoardMap m_boardMap;
 
 	int getPos(char posX, int posY);
 };
