@@ -267,25 +267,12 @@ std::ifstream UI::loadBoardFiles()
 	unsigned int choose = 0;
 	namespace fs = std::filesystem;
 	std::filesystem::path dir = "Boards/";
-	std::ifstream fileName;
-
 
 	choose = userInputInt();
 
 	std::map<int, std::string>::iterator it;
 
-	for (it = boards.begin(); it != boards.end(); it++)
-	{
-
-		if (it == boards.find(choose))
-		{
-			std::cout << "Loading successfull" << std::endl;
-			auto fileName = it;
-			break;
-		}
-
-		return fileName;
-	}
+	return std::ifstream(boards[choose]);
 
 }
 
