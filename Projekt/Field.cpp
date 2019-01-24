@@ -4,6 +4,14 @@ Field::~Field()
 {
 }
 
+std::shared_ptr<Piece> Field::getPiece()
+{
+	if (m_piece.get() == nullptr)
+		return nullptr;
+	else 
+		return std::shared_ptr<Piece>();
+}
+
 std::stringstream Field::draw()
 {
 	std::stringstream draw;

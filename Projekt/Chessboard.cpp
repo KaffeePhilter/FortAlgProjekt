@@ -1,4 +1,7 @@
 #include "Chessboard.h"
+#include "Knight.h"
+#include "King.h"
+#include "Pawn.h"
 
 Field Chessboard::findKnight()
 {
@@ -166,17 +169,19 @@ std::stringstream Chessboard::draw()
 
 BoardVector * Chessboard::getBoardVector()
 {
-	int row = 1;
-	int column = 1;
-	BoardVector boardVector;
+	int row = 0;
+	int column = 0;
+	BoardVector* boardVector = new BoardVector(8, std::vector<Field*>(8));
+
 	for (int i = 1; i <= m_boardMap.size(); i++)
 	{
-		column = ((i-1) % 8) + 1;
-		boardVector[column][row] = m_boardMap[i];
+		column = ((i-1) % 8);
+		(*boardVector)[column][row] = m_boardMap[i];
 
 		if (i % 8 == 0)
 			row++;
 	}
+	return boardVector;
 }
 
 /* 

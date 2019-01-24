@@ -11,7 +11,7 @@ public:
 
 	unsigned short getRow() { return m_row; }
 	char getColumn() { return m_column; }
-	std::shared_ptr<Piece> getPiece() { return m_piece; }
+	std::shared_ptr<Piece> getPiece();
 
 	void setRow(unsigned short row) { m_row = row; }
 	void setColumn(char col) { m_column = col; }
