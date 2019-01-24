@@ -269,6 +269,8 @@ std::ifstream UI::loadBoardFiles()
 
 	std::map<int, std::string>::iterator it;
 
+	std::cout << "Board " << choose << " loaded" << std::endl;
+
 	return std::ifstream(boards[choose]);
 
 }
