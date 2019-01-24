@@ -218,10 +218,10 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 					//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
 					if (k < 8 && l < 8)
 					{
-						Piece* f = boardVec[k][l]->getPiece().get();
+						Piece* p = boardVec[k][l]->getPiece().get();
 
 						if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
-							if (f == nullptr || f == rBoard.findKing().getPiece().get())
+							if (p == nullptr || p == rBoard.findKing().getPiece().get())
 							{
 								//adding and creating Edge from startnode of jump to endnode of jump
 								knightGraph.addEdge(&Edge(*nodeMap[i + j * 8], *nodeMap[k + l * 8]));
