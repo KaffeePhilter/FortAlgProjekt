@@ -40,6 +40,7 @@ void UI::showMainMenuOptions()
 
 void UI::mainMenuChoose()
 {
+	bool run = true;
 	do {
 		switch(userInputChar())
 		{
@@ -73,18 +74,15 @@ void UI::mainMenuChoose()
 		case 'q':	
 					system("CLS");
 					sayGoodBye();
-					
+					run = false;
 					break;
-					
-					
 
-		
 		default:	
 					failInput();
 					runMainMenu();
 					break;
 		}
-	} while (userInputChar() != 'Q' && userInputChar() != 'q');
+	} while (run);
 }
 
 void UI::runMainMenu()
@@ -200,7 +198,6 @@ void UI::sayGoodBye()
 		<< "************|| GOOD   ||*************" << std::endl
 		<< "************||  BYE   ||*************" << std::endl
 		<< "************|| SCREEN ||*************" << std::endl;
-	
 }
 
 
