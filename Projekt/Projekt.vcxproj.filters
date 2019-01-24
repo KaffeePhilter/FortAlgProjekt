@@ -33,6 +33,9 @@
     <ClInclude Include="Piece.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Projekt.cpp">
@@ -56,18 +59,21 @@
     <ClCompile Include="Piece.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Board1.txt">
+    <Text Include="Boards\Board1.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Board2.txt">
+    <Text Include="Boards\Board2.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Board3.txt">
+    <Text Include="Boards\Board3.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Board4.txt">
+    <Text Include="Boards\Board4.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
