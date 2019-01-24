@@ -101,7 +101,22 @@ std::ifstream& UI::loadBoardFiles()
 	return *boardFile;
 
 }
+// Saves the path of the Graph into a textfile doc
+void UI::savePathOfGraph(std::list<Edge*>&edgeList)
+{
+	int i = 1;
 
+	std::string graphName = { "Graph" };
+	std::ofstream savedGraphs("Boards/SavedGraph/");
+
+
+	for (Edge* save : edgeList)
+	{
+		savedGraphs.open(std::to_string(i) + ".txt");
+		
+		savedGraphs.close();
+	}
+}
 
 //-----------------------------------
 

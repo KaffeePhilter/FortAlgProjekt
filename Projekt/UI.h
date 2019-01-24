@@ -7,7 +7,11 @@
 #include <filesystem>
 #include <map>
 #include <string>
+#include <list>
 #include "Chessboard.h"
+#include "Graph.h"
+#include "Edge.h"
+#include "Node.h"
 
 //------------------------------------------
 #define TABLE_WIDTH 24
@@ -49,16 +53,15 @@ public:
 	//read board files
 	
 	void checkIfAllBoardFilesThere();
-
-	
 	void saveAllBoardFiles();
-	
 	void showAllSavedBoardFilesScreen();
 	void showAllSavedBoardFiles();
-
+	
 	std::ifstream& loadBoardFiles();
 	
-
+	//save graph path
+	void savePathOfGraph(std::list<Edge*>&edgeList);
+	
 
 	
 	
