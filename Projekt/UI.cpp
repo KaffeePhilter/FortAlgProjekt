@@ -1,8 +1,5 @@
 #include "UI.h"
 
-
-
-
 char UI::userInputChar()
 {
 	char inputChar;
@@ -33,62 +30,76 @@ void UI::showMainMenuHead()
 void UI::showMainMenuOptions()
 {
 	std::cout << "********************************************" << std::endl
-	<< std::left << std::setw(TABLE_WIDTH) << "| [S]tart Knight" << std::setw(TABLE_WIDTH) << "| [L]oad Board" << std::endl
-	<< std::setw(TABLE_WIDTH) << "| [C]redits " << std::setw(TABLE_WIDTH) << "| [Q]uit " << std::endl;
+		<< std::left << std::setw(TABLE_WIDTH) << "| [S]tart Knight" << std::setw(TABLE_WIDTH) << "| [L]oad Board" << std::endl
+		<< std::setw(TABLE_WIDTH) << "| [C]redits " << std::setw(TABLE_WIDTH) << "| [Q]uit " << std::endl;
 	std::cout << "********************************************" << std::endl;
 }
 
 void UI::mainMenuChoose(Chessboard& rBoard)
 {
 	bool run = true;
-	do {
-		switch(userInputChar())
+	do
+	{
+		
+
+		system("CLS");
+
+		showMainMenuHead();
+		showMainMenuOptions();
+
+		switch (userInputChar())
 		{
-		// jump with knight
-		case 'A':
-		case 'a':
+			// jump with knight
+		case 'S':
+		case 's':
+			if (rBoard.getBoard()->empty())
+			{
+				std::cout << "no board loaded" << std::endl; 
+				std::cout << "Press any key to return to main menu" << std::endl;
+				std::cin.ignore();
+				break;
+			}
+
+			std::cout << rBoard.draw().str() << std::endl;
+			
+			std::cout << "Press any key to return to main menu" << std::endl;
+			std::cin.ignore();
+
 			break;
-		//empty
+			//empty
 		case 'E':
 		case 'e':
 			break;
-		//show credits
+			//show credits
 		case 'C':
-		case 'c':	
-					system("CLS");
-					showCredits();
-					std::cout << "Press any key to return to main menu" << std::endl;
-					std::cin.ignore();
-					system("CLS");
-					runMainMenu(rBoard);
-					break;
-		//load file
+		case 'c':
+			system("CLS");
+			showCredits();
+			break;
+			//load file
 		case 'L':
 		case 'l':
-					system("CLS");
-					runFileMenu(rBoard);
-					break;
-		
-		//quit fucking, crap programm
-		case 'Q':
-		case 'q':	
-					system("CLS");
-					sayGoodBye();
-					run = false;
-					break;
+			system("CLS");
+			runFileMenu(rBoard);
+			break;
 
-		default:	
-					failInput();
-					runMainMenu(rBoard);
-					break;
+			//quit fucking, crap programm
+		case 'Q':
+		case 'q':
+			system("CLS");
+			sayGoodBye();
+			run = false;
+			break;
+
+		default:
+			failInput();
+			break;
 		}
 	} while (run);
 }
 
 void UI::runMainMenu(Chessboard& rBoard)
 {
-	showMainMenuHead();
-	showMainMenuOptions();
 	mainMenuChoose(rBoard);
 }
 
@@ -104,18 +115,21 @@ void UI::showLoadFileMenu()
 void UI::showLoadFileMenuOptions()
 {
 	std::cout << "********************************************" << std::endl
-		<< std::left << std::setw(TABLE_WIDTH) << "| [L]oad files" 
+		<< std::left << std::setw(TABLE_WIDTH) << "| [L]oad files"
 		<< std::setw(TABLE_WIDTH) << "| [C]heck files" << std::endl
-		<< std::setw(TABLE_WIDTH)<<"| [S]how files" <<std::endl
+		<< std::setw(TABLE_WIDTH) << "| [S]how files" << std::endl
 		<< std::setw(TABLE_WIDTH) << "| [M]ain Menu" << std::endl;
 	std::cout << "********************************************" << std::endl;
 }
 
 void UI::showLoadFileMenuChoose(Chessboard& rBoard)
 {
+	bool run = true;
 	saveAllBoardFiles();
 	do
 	{
+		showLoadFileMenu();
+		showLoadFileMenuOptions();
 		switch (userInputChar())
 		{
 		// load BoardX.txt
@@ -123,52 +137,49 @@ void UI::showLoadFileMenuChoose(Chessboard& rBoard)
 		case 'l':
 			system("CLS");
 			showAllSavedBoardFilesScreen();
-			
 			showAllSavedBoardFiles();
+
 			rBoard.initialize(loadBoardFiles());
-			runFileMenu(rBoard);
 			break;
-
-
-
-
-
+					   			 
 		//check if all Boards in the dir /Boards
 		case 'C':
 		case 'c':
 			system("CLS");
 			showLoadFileMenu();
 			checkIfAllBoardFilesThere();
-			std:: cout << "Press any key to return to load board screen" << std::endl;
+			std::cout << "Press any key to return to load board screen" << std::endl;
 			std::cin.ignore();
-			system("CLS");
-			runFileMenu(rBoard);
 			break;
 
 		// show avaiable BoardX.txt DELETE???
-		case 'S': 
+		case 'S':
 		case 's':
-				
-		
+			system("CLS");
+			checkIfAllBoardFilesThere();
+
+			std::cout << "Press any key to continue" << std::endl;
+			std::cin.ignore();
+
+			system("CLS");
+
+			break;
 		//run main menu
 		case 'M':
 		case 'm':
-				system("CLS");
-				runMainMenu(rBoard);
-				break;
-		default: 
+			system("CLS");
+			run = false;
+			break;
+		default:
 			failInput();
-			runFileMenu(rBoard);
 			break;
 		}
 
-	} while (userInputChar() != 'H' && userInputChar() != 'h');
+	} while (run);
 }
 
 void UI::runFileMenu(Chessboard& rBoard)
 {
-	showLoadFileMenu();
-	showLoadFileMenuOptions();
 	showLoadFileMenuChoose(rBoard);
 }
 
@@ -180,8 +191,8 @@ void UI::showCredits()
 		<< "************|| SCREEN  ||*************" << std::endl
 		<< std::endl
 		<< "Program written by:" << std::endl
-		
-		<< "---Philipp Horleander and Konrad Muench---" <<std::endl
+
+		<< "---Philipp Horleander and Konrad Muench---" << std::endl
 		<< std::endl;
 }
 
@@ -210,22 +221,22 @@ the C++ 17 version, which includes the libary filesystem !
 void UI::checkIfAllBoardFilesThere()
 {
 	namespace fs = std::filesystem;
-	unsigned int count=1;
+	unsigned int count = 1;
 
 	std::string path = "\Boards";
-	for (const auto  showFile : fs::directory_iterator(path))
+	for (const auto showFile : fs::directory_iterator(path))
+	{
+		if (!path.empty())
 		{
-			if (!path.empty())
-			{
-				std::cout << "*** File " << count << " found! ***" << std::endl;
-				std::cout << "path\ filename: " << showFile.path() << std::endl;	
-			}
-			else
-			{
-				std::cout << "*** No files found! ***" << std::endl;
-			}
+			std::cout << "*** File " << count << " found! ***" << std::endl;
+			std::cout << "path\ filename: " << showFile.path() << std::endl;
+		}
+		else
+		{
+			std::cout << "*** No files found! ***" << std::endl;
+		}
 		count++;
-		}		
+	}
 }
 
 /*
@@ -238,10 +249,10 @@ void UI::saveAllBoardFiles()
 {
 	unsigned int choose = 1;
 	std::string fileName;
-	
+
 	namespace fs = std::filesystem;
 	std::filesystem::path dir = "Boards/";
-	
+
 	for (const auto & entry : fs::directory_iterator(dir))
 	{
 		entry.path().filename();
@@ -250,11 +261,11 @@ void UI::saveAllBoardFiles()
 
 		fileName = path.u8string();
 
-		boards[choose]=fileName;
+		boards[choose] = "Boards\\" + fileName;
 
 		choose++;
 	}
-		
+
 }
 //
 
@@ -268,32 +279,31 @@ std::ifstream& UI::loadBoardFiles()
 	choose = userInputInt();
 
 	std::cout << "Board " << choose << " loaded" << std::endl;
-	
+
 	std::string choosenPath = boards[choose];
 
 	std::cout << boards[choose] << std::endl;
 
-	std::ifstream boardFile(boards[choose]);
-	
-	return boardFile;
+	std::ifstream* boardFile = new std::ifstream(boards[choose]);
+
+	return *boardFile;
 
 }
 
 
-
 void UI::showAllSavedBoardFiles()
-{	
+{
 
 	std::cout << "********************************************" << std::endl;
 	std::cout << "********** Please choose one board *********" << std::endl;
 	for (int i = 0; i < boards.size(); i++)
-		{
-			std::cout<< std::endl;
-			std::cout<< std::left
-			<< std::setw(TABLE_WIDTH_SMALL) <<" |Number: " "["<< i+1 <<"]"<<" |"
-			<< std::setw(TABLE_WIDTH_SMALL) <<" |Name: "<< boards[i+1] << " |"
+	{
+		std::cout << std::endl;
+		std::cout << std::left
+			<< std::setw(TABLE_WIDTH_SMALL) << " |Number: " "[" << i + 1 << "]" << " |"
+			<< std::setw(TABLE_WIDTH_SMALL) << " |Name: " << boards[i + 1] << " |"
 			<< std::endl;
-		}
+	}
 	std::cout << "********************************************" << std::endl;
 }
 
@@ -301,9 +311,9 @@ void UI::showAllSavedBoardFiles()
 
 void UI::showAllSavedBoardFilesScreen()
 {
-	std::cout	<< "************||  LOAD  ||*************" << std::endl
-				<< "************||  BOARD ||*************" << std::endl
-				<< "************|| SCREEN ||*************" << std::endl;
+	std::cout << "************||  LOAD  ||*************" << std::endl
+		<< "************||  BOARD ||*************" << std::endl
+		<< "************|| SCREEN ||*************" << std::endl;
 }
 
 
