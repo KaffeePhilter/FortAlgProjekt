@@ -38,7 +38,7 @@ void UI::showMainMenuOptions()
 	std::cout << "********************************************" << std::endl;
 }
 
-void UI::mainMenuChoose()
+void UI::mainMenuChoose(Chessboard& rBoard)
 {
 	bool run = true;
 	do {
@@ -60,13 +60,13 @@ void UI::mainMenuChoose()
 					std::cout << "Press any key to return to main menu" << std::endl;
 					std::cin.ignore();
 					system("CLS");
-					runMainMenu();
+					runMainMenu(rBoard);
 					break;
 		//load file
 		case 'L':
 		case 'l':
 					system("CLS");
-					runFileMenu();
+					runFileMenu(rBoard);
 					break;
 		
 		//quit fucking, crap programm
@@ -79,17 +79,17 @@ void UI::mainMenuChoose()
 
 		default:	
 					failInput();
-					runMainMenu();
+					runMainMenu(rBoard);
 					break;
 		}
 	} while (run);
 }
 
-void UI::runMainMenu()
+void UI::runMainMenu(Chessboard& rBoard)
 {
 	showMainMenuHead();
 	showMainMenuOptions();
-	mainMenuChoose();
+	mainMenuChoose(rBoard);
 }
 
 void UI::showLoadFileMenu()
@@ -111,8 +111,9 @@ void UI::showLoadFileMenuOptions()
 	std::cout << "********************************************" << std::endl;
 }
 
-void UI::showLoadFileMenuChoose()
+void UI::showLoadFileMenuChoose(Chessboard& rBoard)
 {
+	saveAllBoardFiles();
 	do
 	{
 		switch (userInputChar())
@@ -124,9 +125,8 @@ void UI::showLoadFileMenuChoose()
 			showAllSavedBoardFilesScreen();
 			
 			showAllSavedBoardFiles();
-				
-			loadBoardFiles();
-			runFileMenu();
+			rBoard.initialize(loadBoardFiles());
+			runFileMenu(rBoard);
 			break;
 
 
@@ -142,7 +142,7 @@ void UI::showLoadFileMenuChoose()
 			std:: cout << "Press any key to return to load board screen" << std::endl;
 			std::cin.ignore();
 			system("CLS");
-			runFileMenu();
+			runFileMenu(rBoard);
 			break;
 
 		// show avaiable BoardX.txt DELETE???
@@ -154,22 +154,22 @@ void UI::showLoadFileMenuChoose()
 		case 'M':
 		case 'm':
 				system("CLS");
-				runMainMenu();
+				runMainMenu(rBoard);
 				break;
 		default: 
 			failInput();
-			runFileMenu();
+			runFileMenu(rBoard);
 			break;
 		}
 
 	} while (userInputChar() != 'H' && userInputChar() != 'h');
 }
 
-void UI::runFileMenu()
+void UI::runFileMenu(Chessboard& rBoard)
 {
 	showLoadFileMenu();
 	showLoadFileMenuOptions();
-	showLoadFileMenuChoose();
+	showLoadFileMenuChoose(rBoard);
 }
 
 void UI::showCredits()
@@ -258,7 +258,7 @@ void UI::saveAllBoardFiles()
 }
 //
 
-std::ifstream UI::loadBoardFiles()
+std::ifstream& UI::loadBoardFiles()
 {
 
 	unsigned int choose = 0;
@@ -267,11 +267,15 @@ std::ifstream UI::loadBoardFiles()
 
 	choose = userInputInt();
 
-	std::map<int, std::string>::iterator it;
-
 	std::cout << "Board " << choose << " loaded" << std::endl;
+	
+	std::string choosenPath = boards[choose];
 
-	return std::ifstream(boards[choose]);
+	std::cout << boards[choose] << std::endl;
+
+	std::ifstream boardFile(boards[choose]);
+	
+	return boardFile;
 
 }
 
@@ -282,13 +286,12 @@ void UI::showAllSavedBoardFiles()
 
 	std::cout << "********************************************" << std::endl;
 	std::cout << "********** Please choose one board *********" << std::endl;
-	std::map<int,std::string>::iterator position;
-	for (position = boards.begin(); position != boards.end(); position++)
+	for (int i = 0; i < boards.size(); i++)
 		{
 			std::cout<< std::endl;
 			std::cout<< std::left
-			<< std::setw(TABLE_WIDTH_SMALL) <<" |Number: " "["<< (*position).first <<"]"<<" |"
-			<< std::setw(TABLE_WIDTH_SMALL) <<" |Name: "<< (*position).second << " |"
+			<< std::setw(TABLE_WIDTH_SMALL) <<" |Number: " "["<< i+1 <<"]"<<" |"
+			<< std::setw(TABLE_WIDTH_SMALL) <<" |Name: "<< boards[i+1] << " |"
 			<< std::endl;
 		}
 	std::cout << "********************************************" << std::endl;

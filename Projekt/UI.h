@@ -30,15 +30,15 @@ public:
 	//main menu start
 	void showMainMenuHead();
 	void showMainMenuOptions();
-	void mainMenuChoose();
-	void runMainMenu();
+	void mainMenuChoose(Chessboard&);
+	void runMainMenu(Chessboard&);
 	//main menu end
 	
 	//load file menu start
 	void showLoadFileMenu();
 	void showLoadFileMenuOptions();
-	void showLoadFileMenuChoose();
-	void runFileMenu();
+	void showLoadFileMenuChoose(Chessboard&);
+	void runFileMenu(Chessboard&);
 	//load file menu end
 
 	//nice messages
@@ -56,7 +56,7 @@ public:
 	void showAllSavedBoardFilesScreen();
 	void showAllSavedBoardFiles();
 
-	std::ifstream loadBoardFiles();
+	std::ifstream& loadBoardFiles();
 	
 
 
