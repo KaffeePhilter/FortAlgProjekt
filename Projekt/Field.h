@@ -6,7 +6,7 @@
 class Field : public Node
 {
 public:
-	Field(char column, unsigned short row) : m_row(row), m_column(column) {}
+	Field(char column, unsigned short row, std::string id) : m_row(row), m_column(column), Node(id) {}
 	~Field();
 
 	unsigned short getRow() { return m_row; }

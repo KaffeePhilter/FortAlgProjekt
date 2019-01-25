@@ -69,7 +69,9 @@ void Chessboard::initialize(std::ifstream& file)
 			posY += 1;
 			break;
 		}
-		m_boardMap[i] = new Field(posX, posY);
+		std::stringstream id;
+		id << posX << posY + 1;
+		m_boardMap[i] = new Field(posX, posY, id.str());
 	}
 
 	while (!file.eof())
