@@ -17,7 +17,7 @@ typedef std::vector<std::vector<Field*>> BoardVector;
 class Chessboard
 {
 public:
-	Chessboard();
+	Chessboard() {}
 	~Chessboard();
 
 	Field* findKnight();
