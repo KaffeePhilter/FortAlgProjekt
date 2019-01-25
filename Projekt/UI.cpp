@@ -102,6 +102,54 @@ std::ifstream& UI::loadBoardFiles()
 	return *boardFile;
 
 }
+void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
+{
+	BoardVector boardVec = *rBoard.getBoardVector();
+
+	int i, j, k, l, counter = 0;
+
+	for (i = 0; i < rBoard.getBoardMap()->size(); i++)
+	{
+		rGraph.addNode(new Node());
+	}
+
+	std::map<int, Node*> nodeMap;
+	for (Node* n : rGraph.getNodes())
+	{
+		nodeMap[counter] = n;
+		counter++;
+	}
+
+	for (i = 0, j = 0; i, j < 8; i++)
+	{
+		for (k = i, l = j; k < i + 3, l < j + 3; k++)
+		{
+			//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
+			if (k < 8 && l < 8)
+			{
+				Piece* p = boardVec[k][l]->getPiece().get();
+
+				if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
+					if (p == nullptr || p == rBoard.findKing().getPiece().get())
+					{
+						//adding and creating Edge from startnode of jump to endnode of jump
+						rGraph.addEdge(&Edge(*nodeMap[i + j * 8], *nodeMap[k + l * 8]));
+					}
+			}
+			if (k >= (i + 2))
+			{
+				k = i;
+				l++;
+			}
+		}
+
+		if (i == 7)
+		{
+			i = 0;
+			j++;
+		}
+	}
+}
 // Saves the path of the Graph into a textfile doc
 void UI::savePathOfGraph(const std::list<Edge*>&edgeList)
 {
@@ -237,51 +285,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			std::cin.ignore();
 
 			// Graph bauen
-			BoardVector boardVec = *rBoard.getBoardVector();
-
-			int i, j, k, l, counter = 0;
-
-			for (i = 0; i < rBoard.getBoardMap()->size(); i++)
-			{
-				knightGraph.addNode(new Node());
-			}
-
-			std::map<int, Node*> nodeMap;
-			for (Node* n : knightGraph.getNodes())
-			{
-				nodeMap[counter] = n;
-				counter++;
-			}
-
-			for (i = 0, j = 0; i, j < 8; i++)
-			{
-				for (k = i, l = j; k < i + 3, l < j + 3; k++)
-				{
-					//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
-					if (k < 8 && l < 8)
-					{
-						Piece* p = boardVec[k][l]->getPiece().get();
-
-						if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
-							if (p == nullptr || p == rBoard.findKing().getPiece().get())
-							{
-								//adding and creating Edge from startnode of jump to endnode of jump
-								knightGraph.addEdge(&Edge(*nodeMap[i + j * 8], *nodeMap[k + l * 8]));
-							}
-					}
-					if (k >= (i + 2))
-					{
-						k = i;
-						l++;
-					}
-				}
-
-				if (i == 7)
-				{
-					i = 0;
-					j++;
-				}
-			}
+			buildGraph(rBoard, knightGraph);
 
 			// Graph nutzen // dickstra
 

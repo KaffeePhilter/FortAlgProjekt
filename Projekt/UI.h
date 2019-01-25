@@ -60,6 +60,7 @@ public:
 	std::ifstream& loadBoardFiles();
 	
 	//save graph path
+	void buildGraph(Chessboard& rBoard, Graph& rGraph);
 	void savePathOfGraph(const std::list<Edge*>& edgeList);
 	
 
