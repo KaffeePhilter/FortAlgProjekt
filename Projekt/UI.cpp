@@ -97,7 +97,7 @@ std::ifstream& UI::loadBoardFiles()
 
 	std::cout << boards[choose] << std::endl;
 
-	m_choosenBoard = boards[choose];
+	m_choosenBoard = choose;
 
 	std::ifstream* boardFile = new std::ifstream(boards[choose]);
 
@@ -148,7 +148,9 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 {
 	std::ofstream output;
-	output.open("Boards/SavedGraph/Graph.txt");
+	std::stringstream path;
+	path << "Boards/SavedGraph/PathOfBoard" << m_choosenBoard << ".txt";
+	output.open(path.str());
 
 	for (Edge* e : edgeList)
 	{
