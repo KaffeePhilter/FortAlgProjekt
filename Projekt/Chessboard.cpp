@@ -3,6 +3,12 @@
 #include "King.h"
 #include "Pawn.h"
 
+Chessboard::~Chessboard()
+{
+	for (int i = 1; i <= m_boardMap.size(); i++)
+		delete m_boardMap[i];
+}
+
 Field* Chessboard::findKnight()
 {
 	for (int i = 0; i < m_boardMap.size(); i++)
@@ -155,6 +161,8 @@ void Chessboard::initialize(std::ifstream& file)
 		}
 		}
 	}
+	file.close();
+	delete &file;
 }
 
 std::stringstream Chessboard::draw()
