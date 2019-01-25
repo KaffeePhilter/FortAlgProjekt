@@ -97,30 +97,27 @@ std::ifstream& UI::loadBoardFiles()
 
 	std::cout << boards[choose] << std::endl;
 
+	m_choosenBoard = boards[choose];
+
 	std::ifstream* boardFile = new std::ifstream(boards[choose]);
 
 	return *boardFile;
 
 }
+
 void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 {
 	BoardVector boardVec = *rBoard.getBoardVector();
+	BoardMap boardMap = *rBoard.getBoardMap();
 
-	int i, j, k, l, counter = 0;
+	int i, j, k, l;
 
-	for (i = 0; i < rBoard.getBoardMap()->size(); i++)
+	for (i = 0; i < boardMap.size(); i++)
 	{
-		rGraph.addNode(new Node());
+		rGraph.addNode(boardMap[i+1]);
 	}
 
-	std::map<int, Node*> nodeMap;
-	for (Node* n : rGraph.getNodes())
-	{
-		nodeMap[counter] = n;
-		counter++;
-	}
-
-	for (i = 0, j = 0; i, j < 8; i++)
+	for (i = 0, j = 0; j < 8; i++)
 	{
 		for (k = i, l = j; k < i + 3, l < j + 3; k++)
 		{
@@ -130,10 +127,10 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 				Piece* p = boardVec[k][l]->getPiece().get();
 
 				if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
-					if (p == nullptr || p == rBoard.findKing().getPiece().get())
+					if (p == nullptr || p == rBoard.findKing()->getPiece().get())
 					{
 						//adding and creating Edge from startnode of jump to endnode of jump
-						rGraph.addEdge(&Edge(*nodeMap[i + j * 8], *nodeMap[k + l * 8]));
+						rGraph.addEdge(new Edge(*boardVec[i][j], *boardVec[k][l]));
 					}
 			}
 			if (k >= (i + 2))
@@ -143,30 +140,25 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 			}
 		}
 
-		if (i == 7)
+		if (i >= 7)
 		{
 			i = 0;
 			j++;
 		}
 	}
 }
+
 // Saves the path of the Graph into a textfile doc
 void UI::savePathOfGraph(const std::list<Edge*>&edgeList)
 {
-	using namespace std;
-	
-	list<Edge*>::iterator itr;
-	ofstream output;
-	output.open("Boards/SavedGrap/Graph.txt");
+	std::ofstream output;
+	output.open("Boards/SavedGraph/" + m_choosenBoard);
 
-
-	for (itr == edgeList.begin(); itr != edgeList.end(); itr++)
+	for (Edge* e : edgeList)
 	{
-		output << *itr <<",";
+		output << e->toString() << ", \n";
 	}
-	output.close();
-	
-	
+	output.close();	
 	
 	/*
 	std::ofstream saveGraph("/Boards/SavedGraph/Graph_x.txt");
@@ -285,13 +277,18 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			std::cin.ignore();
 
 			// Graph bauen
+
 			buildGraph(rBoard, knightGraph);
 
 			// Graph nutzen // dickstra
 
+			Node& knightField = *rBoard.findKnight();
+			Node& kingField = *rBoard.findKing();
+			std::list<Edge*> shortPath = knightGraph.findShortestPathDijkstra(knightField, kingField);
 
 			// path speichern
 
+			savePathOfGraph(shortPath);
 
 			std::cout << "Press any key to return to main menu" << std::endl;
 			std::cin.ignore();

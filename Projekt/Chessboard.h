@@ -20,8 +20,8 @@ public:
 	Chessboard() {}
 	~Chessboard() {}
 
-	Field findKnight();
-	Field findKing();
+	Field* findKnight();
+	Field* findKing();
 	
 	void initialize(std::ifstream& file);
 	std::stringstream draw();

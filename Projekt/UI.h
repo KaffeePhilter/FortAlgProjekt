@@ -22,7 +22,7 @@
 class UI
 {
 private:
-	
+	std::string m_choosenBoard;
 public:
 	//map with all boards
 	std::map<int,std::string>boards;

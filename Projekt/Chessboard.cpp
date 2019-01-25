@@ -3,7 +3,7 @@
 #include "King.h"
 #include "Pawn.h"
 
-Field Chessboard::findKnight()
+Field* Chessboard::findKnight()
 {
 	for (int i = 0; i < m_boardMap.size(); i++)
 	{
@@ -12,12 +12,12 @@ Field Chessboard::findKnight()
 		{
 			std::string cmp = p->draw().str();
 			if (cmp == "s" || cmp == "S")
-				return *m_boardMap[i + 1];
+				return m_boardMap[i + 1];
 		}
 	}
 }
 
-Field Chessboard::findKing()
+Field* Chessboard::findKing()
 {
 	for (int i = 0; i < m_boardMap.size(); i++)
 	{
@@ -28,7 +28,7 @@ Field Chessboard::findKing()
 			if (cmp == "k" || cmp == "K")
 			{
 				Field f = *m_boardMap[i+1];
-				return *m_boardMap[i + 1];
+				return m_boardMap[i + 1];
 			}
 		}
 	}
