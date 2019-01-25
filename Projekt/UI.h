@@ -60,7 +60,7 @@ public:
 	std::ifstream& loadBoardFiles();
 	
 	//save graph path
-	void savePathOfGraph(std::list<Edge*>&edgeList);
+	void savePathOfGraph(const std::list<Edge*>& edgeList);
 	
 
 	

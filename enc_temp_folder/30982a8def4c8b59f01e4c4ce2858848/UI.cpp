@@ -113,7 +113,7 @@ void UI::savePathOfGraph(const std::list<Edge*>&edgeList)
 
 	for (itr == edgeList.begin(); itr != edgeList.end(); itr++)
 	{
-		output << *itr <<",";
+		output << *itr;
 	}
 	output.close();
 	
