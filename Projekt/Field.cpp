@@ -9,7 +9,7 @@ std::shared_ptr<Piece> Field::getPiece()
 	if (m_piece.get() == nullptr)
 		return nullptr;
 	else 
-		return std::shared_ptr<Piece>();
+		return m_piece;
 }
 
 std::stringstream Field::draw()
