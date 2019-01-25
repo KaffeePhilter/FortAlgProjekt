@@ -18,7 +18,7 @@ class Chessboard
 {
 public:
 	Chessboard() {}
-	~Chessboard();
+	~Chessboard() {}
 
 	Field* findKnight();
 	Field* findKing();

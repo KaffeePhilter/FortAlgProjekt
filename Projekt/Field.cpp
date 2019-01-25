@@ -2,7 +2,7 @@
 
 Field::~Field()
 {
-	delete &m_piece;
+
 }
 
 std::shared_ptr<Piece> Field::getPiece()

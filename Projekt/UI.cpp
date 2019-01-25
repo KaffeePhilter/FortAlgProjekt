@@ -142,7 +142,6 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 			}
 		}
 	}
-	delete &boardVec;
 }
 
 // Saves the path of the Graph into a textfile doc
@@ -158,7 +157,6 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 		output << e->toString() << ", \n";
 	}
 	output.close();	
-	delete &output;
 	/*
 	std::ofstream saveGraph("/Boards/SavedGraph/Graph_x.txt");
 	unsigned int i = 0;
