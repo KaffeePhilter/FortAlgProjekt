@@ -33,7 +33,7 @@ public:
 
 	std::vector<Edge*> findEdges(const Node& rSrc, const Node& rDst);
 
-	std::list<Edge*> findShortestPathDijkstra(Node& rSrcNode, Node& rDstNode);
+	void findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcNode, const Node& rDstNode);
 
 protected:
 

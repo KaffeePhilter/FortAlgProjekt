@@ -117,42 +117,38 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 		rGraph.addNode(boardMap[i+1]);
 	}
 
-	for (i = 0, j = 0; j < 8; i++)
+	for (i = 0; i < 8; i++)
 	{
-		for (k = i, l = j; k < i + 3, l < j + 3; k++)
+		for (j = 0; j < 8; j++)
 		{
-			//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
-			if (k < 8 && l < 8)
+			for (k = i - 3; k < i + 3; k++)
 			{
-				Piece* p = boardVec[k][l]->getPiece().get();
-
-				if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
-					if (p == nullptr || p == rBoard.findKing()->getPiece().get())
+				for (l = j - 3; l < j + 3; l++)
+				{
+					//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
+					if (((-1 < k) && (k < 8)) 
+						&& ((-1 < l) && (l < 8)))
 					{
-						//adding and creating Edge from startnode of jump to endnode of jump
-						rGraph.addEdge(new Edge(*boardVec[i][j], *boardVec[k][l]));
-					}
-			}
-			if (k >= (i + 2))
-			{
-				k = i;
-				l++;
-			}
-		}
+						Piece* p = boardVec[k][l]->getPiece().get();
 
-		if (i >= 7)
-		{
-			i = 0;
-			j++;
+						if ((abs(i - k) == 1 && abs(j - l) == 2) || (abs(i - k) == 2 && abs(j - l) == 1))
+							if (p == nullptr || p == rBoard.findKing()->getPiece().get())
+							{
+								//adding and creating Edge from startnode of jump to endnode of jump
+								rGraph.addEdge(new Edge(*boardVec[i][j], *boardVec[k][l]));
+							}
+					}
+				}
+			}
 		}
 	}
 }
 
 // Saves the path of the Graph into a textfile doc
-void UI::savePathOfGraph(const std::list<Edge*>&edgeList)
+void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 {
 	std::ofstream output;
-	output.open("Boards/SavedGraph/" + m_choosenBoard);
+	output.open("Boards/SavedGraph/Graph.txt");
 
 	for (Edge* e : edgeList)
 	{
@@ -284,10 +280,17 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 
 			Node& knightField = *rBoard.findKnight();
 			Node& kingField = *rBoard.findKing();
-			std::list<Edge*> shortPath = knightGraph.findShortestPathDijkstra(knightField, kingField);
+			std::deque<Edge*> shortPath;
+
+			knightGraph.findShortestPathDijkstra(shortPath, knightField, kingField);
 
 			// path speichern
-
+			std::deque<Edge*> allEdges;
+			for (Edge* e : knightGraph.getEdges())
+			{
+				allEdges.push_back(e);
+			}
+			
 			savePathOfGraph(shortPath);
 
 			std::cout << "Press any key to return to main menu" << std::endl;

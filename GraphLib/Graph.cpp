@@ -167,22 +167,23 @@ std::vector<Edge*> Graph::findEdges(const Node& rSrc, const Node& rDst)
 
 //---------------------------------------------------------------------------------------------------------------------
 
-std::list<Edge*> Graph::findShortestPathDijkstra(Node& rSrcNode, Node& rDstNode)
+void Graph::findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcNode, const Node& rDstNode)
 {
+	using namespace std;
+
+
 	/*
 	Ein häufiges Anwendungsproblem für Graphen-Anwendungen besteht darin,
 	den Pfad zwischen verschiedenen Nodes zu finden, die direkt oder indirekt über Edges miteinander verbunden sind.
 	Um den optimalsten Pfad(den mit den geringsten Kantengewichten) zu finden, gibt es den Dijkstra-Algorithmus!
 	Pseudocode (Quelle: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 	>>>
-	*/
-	/*
 	function Dijkstra(Graph, source):
 
 		  create vertex set Q
 
 		  for each vertex v in Graph:             // Initialization
-			  dist[v] ← INFINITY                  // Unknown distance from source to v
+			  dist[v] ← INFINITY                  // Unknown distance from source to element in m_nodes
 			  prev[v] ← UNDEFINED                 // Previous node in optimal path from source
 			  add v to Q                          // All nodes initially in Q (unvisited nodes)
 
@@ -200,8 +201,7 @@ std::list<Edge*> Graph::findShortestPathDijkstra(Node& rSrcNode, Node& rDstNode)
 
 		  return dist[], prev[]
 	<<<
-	*/
-	/*
+
 	Betrachten Sie den Pseudocode und setzen Sie ihn in C++ um.
 	Sortieren Sie am Ende das Ergebnis in die richtige Reihenfolge um
 	und geben sie die kürzeste Route zwischen rSrcNode und rDstNode als Liste von Edges zurück.
@@ -211,77 +211,91 @@ std::list<Edge*> Graph::findShortestPathDijkstra(Node& rSrcNode, Node& rDstNode)
 	und sich die kürzesteste Route zwischen 2 Nodes zurückgeben lassen.
 	*/
 
-	std::set<Node*> Q;
-	std::map<Node*, double> dist;
-	std::map<Node*, Node*> prev;
-	std::list<Edge*> rPath;
+	//-----------------------------
+	/*
+	Notation:
+	v == proofNode
+	u == examineNode
+	q == queque
+	*/
+	//-----------------------------
+	map<Node*, double> distance;
+	map<const Node*, Node*> previous;
+	vector<Edge*> route;
+	set<Node*> queque;
 
-	//adding all Nodes to the set Q
-	for (Node* v : m_nodes)
+	double newDistance;
+
+
+	//iteriert durch liste m_nodes und fügt Nodes hinzu
+	for (Node* proofNode : m_nodes)
 	{
-		if (v == &rSrcNode)
-			dist[v] = 0;
+		previous[proofNode] = NULL;
+		queque.insert(proofNode);
+
+		if (proofNode == &rSrcNode)
+		{
+			distance[proofNode] = 0;
+		}
 		else
-			dist[v] = std::numeric_limits<int>::max();
-		Q.insert(v);
+		{
+			distance[proofNode] = numeric_limits<double>::max();
+		}
 	}
 
-	int alt;
-
-	do
+	while (!queque.empty())
 	{
-		//get vertex u with minimum dist[u]
-		Node* u = *Q.begin();
-		for (Node* v : Q)
+
+		//vergleicht Distanzen
+		Node* examineNode = *queque.begin();
+		for (Node* proofNode : queque)
 		{
-			if (dist[v] <= dist[u])
+			if (distance.find(proofNode)->second < distance.find(examineNode)->second) // distance[proofNode]
 			{
-				u = v;
-				break;
+				examineNode = proofNode;
 			}
 		}
 
-		//remove u out of vertex set Q
-		Q.erase(u);
+		//entfernt examninNode aus queque und als erforscht
+		queque.erase(examineNode);
 
-		//for each nieghbour v of u
-		for (Edge* e : m_edges)
+		// für jede Nachbar Node von examineNode zu proofNode
+		for (Edge* nieghbour : m_edges)
 		{
-			Node* v = &e->getDstNode();
-			if (&e->getSrcNode() == u)
-			{
-				alt = dist[u] + e->getWeight();
 
-				if (alt < dist[v])
+			Node* proofNode = &nieghbour->getDstNode();
+			if (&nieghbour->getSrcNode() == examineNode)
+			{
+				newDistance = distance.find(examineNode)->second + nieghbour->getWeight();
+
+				if (newDistance < distance.find(proofNode)->second)
 				{
-					dist[v] = alt;
-					prev[v] = u;
+					distance.find(proofNode)->second = newDistance;
+					previous.find(proofNode)->second = examineNode;
 				}
 			}
 		}
-	} while (Q.size() > 0);
+	}
 
-	//sorting the path in rPath
-	//find the destNode 
+	//Sortierung des Pfades
+	//sucht nach Zielnode
 
-	//FIX_ME
-	Node* n = &rDstNode;
+	const Node* way = &rDstNode;
 
-	do
+	while (way != &rSrcNode)
 	{
-		std::list<Edge*> inEdges = prev[n]->getOutEdges();
-		for (Edge* e : inEdges)
+		list<Edge*> inEdges = previous.find(way)->second->getOutEdges();
+
+		for (Edge* sortIn : inEdges)
 		{
-			// BROKEN 
-			if (&e->getDstNode() == n)
+
+			if (&sortIn->getDstNode() == way)
 			{
-				rPath.push_front(e);
+				rPath.push_front(sortIn);
 				break;
 			}
 		}
-		n = prev[n];
-	} while (n != &rSrcNode);
-
-	return rPath;
+		way = previous.find(way)->second;
+	}
 }
 //---------------------------------------------------------------------------------------------------------------------

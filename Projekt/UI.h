@@ -61,7 +61,7 @@ public:
 	
 	//save graph path
 	void buildGraph(Chessboard& rBoard, Graph& rGraph);
-	void savePathOfGraph(const std::list<Edge*>& edgeList);
+	void savePathOfGraph(const std::deque<Edge*>& edgeList);
 	
 
 	
