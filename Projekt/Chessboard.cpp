@@ -66,12 +66,13 @@ void Chessboard::initialize(std::ifstream& file)
 			posX = 'g';
 			break;
 		case 0:
-			posX = 'h';
 			posY += 1;
+			posX = 'h';
 			break;
 		}
 		std::stringstream id;
-		id << posX << posY + 1;
+		
+		id << posX << posY;
 		m_boardMap[i] = new Field(posX, posY, id.str());
 	}
 
