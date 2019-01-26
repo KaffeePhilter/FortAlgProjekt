@@ -74,7 +74,7 @@ void UI::saveAllBoardFiles()
 
 		choose++;
 	}
-	
+
 }
 
 /*
@@ -85,11 +85,15 @@ the C++ 17 version, which includes the libary filesystem !
 std::ifstream& UI::loadBoardFiles()
 {
 
-	unsigned int choose = 0;
+	int choose = 0;
 	namespace fs = std::filesystem;
 	std::filesystem::path dir = "Boards/";
 
 	choose = userInputInt();
+
+	if (choose <= 0)
+		throw "invalid input";
+	
 
 	std::cout << "Board " << choose << " loaded" << std::endl;
 
@@ -114,7 +118,7 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 
 	for (i = 0; i < boardMap.size(); i++)
 	{
-		rGraph.addNode(boardMap[i+1]);
+		rGraph.addNode(boardMap[i + 1]);
 	}
 
 	for (i = 0; i < 8; i++)
@@ -126,7 +130,7 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 				for (l = j - 3; l < j + 3; l++)
 				{
 					//std::cout << "i = " << i << ", j = " << j << ", k = " << k << ", l = " << l << std::endl;
-					if (((-1 < k) && (k < 8)) 
+					if (((-1 < k) && (k < 8))
 						&& ((-1 < l) && (l < 8)))
 					{
 						Piece* p = boardVec[k][l]->getPiece().get();
@@ -159,7 +163,7 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 		output << e->toString() << ", \n";
 		std::cout << e->toString() << "," << std::endl;
 	}
-	output.close();	
+	output.close();
 
 	std::cout << "\n shortest path for \"Board" << m_choosenBoard << "\" saved in \"" << path.str() << "\"" << std::endl;
 
@@ -177,7 +181,7 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 			saveGraph << output<<;
 		}
 		saveGraph.close();
-		
+
 	}
 	else
 	{
@@ -185,7 +189,7 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 
 	}
 	*/
-	
+
 }
 
 
@@ -305,7 +309,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			{
 				allEdges.push_back(e);
 			}
-			
+
 			savePathOfGraph(shortPath);
 
 			std::cout << "Press any key to return to main menu" << std::endl;
@@ -378,20 +382,36 @@ void UI::showLoadFileMenuChoose(Chessboard& rBoard)
 	{
 		showLoadFileMenu();
 		showLoadFileMenuOptions();
+
 		switch (userInputChar())
 		{
 			// load BoardX.txt
 		case 'L':
 		case 'l':
-			system("CLS");
-			showAllSavedBoardFilesScreen();
-			showAllSavedBoardFiles();
+		{
+			bool failed = false;
+			do
+			{
+				failed = false;
+				system("CLS");
+				showAllSavedBoardFilesScreen();
+				showAllSavedBoardFiles();
 
-			rBoard.initialize(loadBoardFiles());
+				try
+				{
+					rBoard.initialize(loadBoardFiles());
+				}
+				catch (...)
+				{
+					failInput();
+					failed = true;
+				}
+			} while (failed);
+
 			std::cin.ignore();
 			system("CLS");
 			break;
-
+		}
 			//check if all Boards in the dir /Boards
 		case 'C':
 		case 'c':
