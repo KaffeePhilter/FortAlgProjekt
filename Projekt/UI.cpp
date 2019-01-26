@@ -142,6 +142,8 @@ void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 			}
 		}
 	}
+
+	std::cout << "Graph created" << std::endl;
 }
 
 // Saves the path of the Graph into a textfile doc
@@ -157,6 +159,9 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 		output << e->toString() << ", \n";
 	}
 	output.close();	
+
+	std::cout << "shortest path for Baord" << m_choosenBoard << " saved" << std::endl;
+
 	/*
 	std::ofstream saveGraph("/Boards/SavedGraph/Graph_x.txt");
 	unsigned int i = 0;
@@ -283,7 +288,15 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			Node& kingField = *rBoard.findKing();
 			std::deque<Edge*> shortPath;
 
-			knightGraph.findShortestPathDijkstra(shortPath, knightField, kingField);
+			try
+			{
+				knightGraph.findShortestPathDijkstra(shortPath, knightField, kingField);
+			}
+			catch (...)
+			{
+			}
+
+			std::cout << "shortest path found" << std::endl;
 
 			// path speichern
 			std::deque<Edge*> allEdges;

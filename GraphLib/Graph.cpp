@@ -284,6 +284,10 @@ void Graph::findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcN
 
 	while (way != &rSrcNode)
 	{
+		map<const Node*, Node*>::iterator find = previous.find(way);
+		if (find->second == NULL)
+			break;
+
 		list<Edge*> inEdges = previous.find(way)->second->getOutEdges();
 
 		for (Edge* sortIn : inEdges)
