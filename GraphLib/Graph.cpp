@@ -284,11 +284,12 @@ void Graph::findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcN
 
 	while (way != &rSrcNode)
 	{
+		// test für kein pfad
 		map<const Node*, Node*>::iterator find = previous.find(way);
 		if (find->second == NULL)
 			break;
 
-		list<Edge*> inEdges = previous.find(way)->second->getOutEdges();
+		list<Edge*> inEdges = find->second->getOutEdges();
 
 		for (Edge* sortIn : inEdges)
 		{
@@ -299,7 +300,7 @@ void Graph::findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcN
 				break;
 			}
 		}
-		way = previous.find(way)->second;
+		way = find->second;
 	}
 }
 //---------------------------------------------------------------------------------------------------------------------

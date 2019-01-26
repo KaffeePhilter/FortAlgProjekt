@@ -157,10 +157,11 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 	for (Edge* e : edgeList)
 	{
 		output << e->toString() << ", \n";
+		std::cout << e->toString() << "," << std::endl;
 	}
 	output.close();	
 
-	std::cout << "shortest path for Baord" << m_choosenBoard << " saved" << std::endl;
+	std::cout << "\n shortest path for \"Board" << m_choosenBoard << "\" saved in \"" << path.str() << "\"" << std::endl;
 
 	/*
 	std::ofstream saveGraph("/Boards/SavedGraph/Graph_x.txt");
@@ -296,7 +297,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			{
 			}
 
-			std::cout << "shortest path found" << std::endl;
+			std::cout << "shortest path found: \n" << std::endl;
 
 			// path speichern
 			std::deque<Edge*> allEdges;
