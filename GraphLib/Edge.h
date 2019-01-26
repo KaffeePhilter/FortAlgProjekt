@@ -1,3 +1,12 @@
+/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
+
 #ifndef EDGE_H
 #define EDGE_H
 

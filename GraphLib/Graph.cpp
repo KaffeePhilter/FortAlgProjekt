@@ -1,4 +1,13 @@
-﻿#include "Graph.h"
+﻿/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
+
+#include "Graph.h"
 #include <list>
 #include <fstream>
 #include <algorithm>
@@ -171,7 +180,7 @@ void Graph::findShortestPathDijkstra(std::deque<Edge*>& rPath, const Node& rSrcN
 {
 	using namespace std;
 
-
+	//implementiert von K.Muench fuer LAB5
 	/*
 	Ein häufiges Anwendungsproblem für Graphen-Anwendungen besteht darin,
 	den Pfad zwischen verschiedenen Nodes zu finden, die direkt oder indirekt über Edges miteinander verbunden sind.

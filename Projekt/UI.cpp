@@ -1,9 +1,19 @@
+/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
+
+
 #include "UI.h"
 #include "Graph.h"
 #include <map>
 
 
-//Vars.------------------------------
+//User input functions------------------------
 
 char UI::userInputChar()
 {
@@ -23,8 +33,6 @@ int UI::userInputInt()
 	return inputInt;
 }
 
-//-----------------------------------
-
 
 //Functions------------------------------------
 
@@ -38,12 +46,12 @@ void UI::checkIfAllBoardFilesThere()
 	{
 		if (!path.empty())
 		{
-			std::cout << "*** File " << count << " found! ***" << std::endl;
+			std::cout << "*|File " << count << " found!|*" << std::endl;
 			std::cout << "path\ filename: " << showFile.path() << std::endl;
 		}
 		else
 		{
-			std::cout << "*** No files found! ***" << std::endl;
+			std::cout << "*|No files found!|*" << std::endl;
 		}
 		count++;
 	}
@@ -106,9 +114,11 @@ std::ifstream& UI::loadBoardFiles()
 	std::ifstream* boardFile = new std::ifstream(boards[choose]);
 
 	return *boardFile;
-
+	
+	delete boardFile;
 }
 
+//build the graph
 void UI::buildGraph(Chessboard & rBoard, Graph & rGraph)
 {
 	BoardVector boardVec = *rBoard.getBoardVector();
@@ -167,40 +177,15 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 
 	std::cout << "\n shortest path for \"Board" << m_choosenBoard << "\" saved in \"" << path.str() << "\"" << std::endl;
 
-	/*
-	std::ofstream saveGraph("/Boards/SavedGraph/Graph_x.txt");
-	unsigned int i = 0;
-
-	auto output = edgeList;
-
-	if (saveGraph.is_open())
-	{
-		std::list<Edge*>::iterator itGraph;
-		for(itGraph; *itGraph != output; itGraph++)
-		{
-			saveGraph << output<<;
-		}
-		saveGraph.close();
-
-	}
-	else
-	{
-		std::cout << "Unable to open file!" << std::endl;
-
-	}
-	*/
-
 }
 
 
-//-----------------------------------
 
 //Screens------------------------------------
 
 void UI::showAllSavedBoardFiles()
 {
-
-	std::cout << "********************************************" << std::endl;
+	std::cout << std::endl;
 	std::cout << "********** Please choose one board *********" << std::endl;
 	for (int i = 0; i < boards.size(); i++)
 	{
@@ -215,39 +200,46 @@ void UI::showAllSavedBoardFiles()
 
 void UI::showCredits()
 {
-	std::cout << std::fixed << std::setw(TABLE_WIDTH)
-		<< "************|| AWESOME ||*************" << std::endl
-		<< "************|| CREDITS ||*************" << std::endl
-		<< "************|| SCREEN  ||*************" << std::endl
-		<< std::endl
-		<< "Program written by:" << std::endl
-
-		<< "---Philipp Horleander and Konrad Muench---" << std::endl
+	std::cout << std::setw(TABLE_WIDTH)
+		<< "||************|| AWESOME ||************||" << std::endl
+		<< "||************|| CREDITS ||************||" << std::endl
+		<< "||************|| SCREEN  ||************||" << std::endl
 		<< std::endl;
+		
+	std::cout << "||**************************************||" << std::endl
+		<< "|	Program written by :" << std::endl
+		<< "|						" << std::endl
+		<< "|	Philipp Horleander  " << std::endl
+		<< "|	\tand" << std::endl
+		<< "|	Konrad Muench" << std::endl
+		<< "||**************************************||" << std::endl;
+	
 }
 
 void UI::showAllSavedBoardFilesScreen()
 {
-	std::cout << "************||  LOAD  ||*************" << std::endl
-		<< "************||  BOARD ||*************" << std::endl
-		<< "************|| SCREEN ||*************" << std::endl;
+	std::cout 
+		<< "||************||  LOAD  ||************||" << std::endl
+		<< "||************||  BOARD ||************||" << std::endl
+		<< "||************|| SCREEN ||************||" << std::endl;
 }
 
 void UI::showMainMenuHead()
 {
 	std::cout << std::fixed << std::setw(TABLE_WIDTH)
-		<< "************||  MAIN  ||*************" << std::endl
-		<< "************||  MENU  ||*************" << std::endl
-		<< "************|| SCREEN ||*************" << std::endl
+		<< "||************||  MAIN  ||************||" << std::endl
+		<< "||************||  MENU  ||************||" << std::endl
+		<< "||************|| SCREEN ||************||" << std::endl
 		<< std::endl;
 }
 
 void UI::showMainMenuOptions()
 {
-	std::cout << "********************************************" << std::endl
-		<< std::left << std::setw(TABLE_WIDTH) << "| [S]tart Knight" << std::setw(TABLE_WIDTH) << "| [L]oad Board" << std::endl
-		<< std::setw(TABLE_WIDTH) << "| [C]redits " << std::setw(TABLE_WIDTH) << "| [Q]uit " << std::endl;
-	std::cout << "********************************************" << std::endl;
+			
+	std::cout << "||************************************||" << std::endl
+		<< std::left << std::setw(TABLE_WIDTH) << "| [S]tart Knight" << std::setw(TABLE_WIDTH) << "| [L]oad Board |" << std::endl
+		<< std::setw(TABLE_WIDTH) << "| [C]redits " << std::setw(TABLE_WIDTH) << "| [Q]uit       |" << std::endl;
+ std::cout << "||************************************||" << std::endl;
 }
 
 void UI::mainMenuChoose(Chessboard& rBoard)
@@ -271,7 +263,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			if (rBoard.getBoardMap()->empty())
 			{
 				std::cout << "no board loaded" << std::endl;
-				std::cout << "Press any key to return to main menu" << std::endl;
+				std::cout << "*|Press [ENTER] to return to main menu|*" << std::endl;
 				std::cin.ignore();
 				break;
 			}
@@ -279,15 +271,15 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			std::cout << rBoard.draw().str() << std::endl;
 
 			std::cout
-				<< "Press any key to start the search for the shortest path from knight to king"
+				<< "*|Press [ENTER] to start the search for the shortest path from knight to king|*"
 				<< std::endl;
 			std::cin.ignore();
 
-			// Graph bauen
+			// build graph
 
 			buildGraph(rBoard, knightGraph);
 
-			// Graph nutzen // dickstra
+			// use builded graph // Djikstra
 
 			Node& knightField = *rBoard.findKnight();
 			Node& kingField = *rBoard.findKing();
@@ -301,21 +293,32 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			{
 			}
 
-			std::cout << "shortest path found: \n" << std::endl;
-
-			// path speichern
-			std::deque<Edge*> allEdges;
-			for (Edge* e : knightGraph.getEdges())
+			if (!shortPath.empty())
 			{
-				allEdges.push_back(e);
+				std::cout << "shortest path found: \n" << std::endl;
+
+				// safe path
+				std::deque<Edge*> allEdges;
+				for (Edge* e : knightGraph.getEdges())
+				{
+					allEdges.push_back(e);
+				}
+
+				savePathOfGraph(shortPath);
+
+				std::cout << "*|Press [ENTER] to return to main menu|*" << std::endl;
+				std::cin.ignore();
+
+				
 			}
-
-			savePathOfGraph(shortPath);
-
-			std::cout << "Press any key to return to main menu" << std::endl;
-			std::cin.ignore();
-
-			break;
+			else
+			{
+				std::cout << "*|there is no path, try another board !|* \n " << std::endl;
+				std::cout << "*|Press [ENTER] to return to main menu|*" << std::endl;
+				std::cin.ignore();
+				Chessboard board;
+				runMainMenu(board);
+			}
 		}
 		//empty
 		case 'E':
@@ -326,7 +329,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 		case 'c':
 			system("CLS");
 			showCredits();
-			std::cout << "Press any key to return to main menu" << std::endl;
+			std::cout << "*|Press [ENTER] to return to main menu|*" << std::endl;
 			std::cin.ignore();
 			break;
 			//load file
@@ -349,6 +352,7 @@ void UI::mainMenuChoose(Chessboard& rBoard)
 			break;
 		}
 	} while (run);
+	delete &rBoard;
 }
 
 void UI::runMainMenu(Chessboard& rBoard)
@@ -367,11 +371,11 @@ void UI::showLoadFileMenu()
 
 void UI::showLoadFileMenuOptions()
 {
-	std::cout << "********************************************" << std::endl
-		<< std::left << std::setw(TABLE_WIDTH) << "| [L]oad files"
-		<< std::setw(TABLE_WIDTH) << "| [C]heck files" << std::endl
-		<< std::setw(TABLE_WIDTH) << "| [M]ain Menu" << std::endl;
-	std::cout << "********************************************" << std::endl;
+	std::cout << "||************************************||" << std::endl
+		<< std::setw(TABLE_WIDTH) << "| [L]oad files "
+		<< std::setw(TABLE_WIDTH) << "|[C]heck files |" << std::endl
+		<< std::setw(TABLE_WIDTH) << "| [M]ain menu " << std::endl;
+	std::cout << "||************************************||" << std::endl;
 }
 
 void UI::showLoadFileMenuChoose(Chessboard& rBoard)
@@ -418,7 +422,8 @@ void UI::showLoadFileMenuChoose(Chessboard& rBoard)
 			system("CLS");
 			showLoadFileMenu();
 			checkIfAllBoardFilesThere();
-			std::cout << "Press any key to return to load board screen" << std::endl;
+			std::cout<<std::endl;
+			std::cout << "*|Press [ENTER] to return to load board screen|*" << std::endl;
 			std::cin.ignore();
 			system("CLS");
 			break;
@@ -446,7 +451,7 @@ void UI::runFileMenu(Chessboard& rBoard)
 
 void UI::failInput()
 {
-	std::cout << "Invalid input, please try again!" << std::endl;
+	std::cout << "*|Invalid input, please try again!|*" << std::endl;
 	std::cin.ignore();
 	system("CLS");
 }
@@ -454,26 +459,60 @@ void UI::failInput()
 void UI::sayGoodBye()
 {
 	std::cout << std::fixed << std::setw(TABLE_WIDTH)
-		<< "************|| GOOD   ||*************" << std::endl
-		<< "************||  BYE   ||*************" << std::endl
-		<< "************|| SCREEN ||*************" << std::endl;
+		<< "||************||  GOOD  ||************||" << std::endl
+		<< "||************||  BYE   ||************||" << std::endl
+		<< "||************||  SEE U ||************||" << std::endl;
+}
+
+void UI::showKnightLogo()
+{
+	  std::cout << std::fixed << std::setw(TABLE_WIDTH)
+	<< "||************||  WELCOME  ||************||" << std::endl
+	<< "||************||  TO OUR   ||************||" << std::endl
+	<< "||************||  PROGRAM  ||************||" << std::endl;
+	
+	std::cout << "\t\t     ,...., " << std::endl;
+	std::cout << "\t\t   ,::::::< " << std::endl;
+	std::cout << "\t\t   ,::/^\\""``. " << std::endl;
+	std::cout << "\t\t ,::/, `   0`. " << std::endl;
+	std::cout << "\t\t ,::; |        '. " << std::endl;
+	std::cout << "\t\t ,::|  \___,-.  ^^) " << std::endl;
+	std::cout << "\t\t ;::|     \\   '-' " << std::endl;
+	std::cout << "\t\t ;::|      \\ " << std::endl;
+	std::cout << "\t\t ;::|   _.=`\\ " << std::endl;
+	std::cout << "\t\t `;:|.=` _.=`\\ " << std::endl;
+	std::cout << "\t\t   '|_.=`   __\\ " << std::endl;
+	std::cout << "\t\t    `\\_..==`` / " << std::endl;
+	std::cout << "\t\t     .'.___.-'. " << std::endl;
+	std::cout << "\t\t    /         \\ " << std::endl;
+	std::cout << "\t\t   ('--......--') " << std::endl;
+	std::cout << "\t\t  // --......--\\\\" << std::endl;
+	std::cout << "\t\t (____--...--____) " << std::endl;
+	std::cout << "\t\t         |  " << std::endl;
+	std::cout << "\t\t CHESS   |   KNIGHT " << std::endl;
+	std::cout << "\t\t		    		 " << std::endl;
+	std::cout << "\t\t      PROBLEM 		\n " << std::endl;
+	
+	
+	std::cout << "\tPRESS [ENTER] TO START PROGRAM" <<std::endl;
+	std::cin.ignore();
 }
 
 //-----------------------------------
 
 
-//Construtors--------------------------------
+//Construtors------------------------
 
 UI::UI()
 {
 }
 
-//-----------------------------------
 
-//Deconstrutors------------------------------
+
+//Destructors------------------------
 
 UI::~UI()
 {
 }
 
-//-----------------------------------
+

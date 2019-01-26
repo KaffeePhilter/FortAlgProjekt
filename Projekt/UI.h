@@ -1,3 +1,13 @@
+/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
+
+
 #pragma once
 #include <iostream>
 #include <iomanip>
@@ -36,27 +46,25 @@ public:
 	void showMainMenuOptions();
 	void mainMenuChoose(Chessboard&);
 	void runMainMenu(Chessboard&);
-	//main menu end
 	
 	//load file menu start
 	void showLoadFileMenu();
 	void showLoadFileMenuOptions();
 	void showLoadFileMenuChoose(Chessboard&);
 	void runFileMenu(Chessboard&);
-	//load file menu end
+	
 
-	//nice messages
+	//Screens
 	void showCredits();
 	void failInput();
 	void sayGoodBye();
+	void showKnightLogo();
 	
 	//read board files
-	
 	void checkIfAllBoardFilesThere();
 	void saveAllBoardFiles();
 	void showAllSavedBoardFilesScreen();
 	void showAllSavedBoardFiles();
-	
 	std::ifstream& loadBoardFiles();
 	
 	//save graph path

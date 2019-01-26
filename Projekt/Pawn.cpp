@@ -1,5 +1,14 @@
-#include "Pawn.h"
+/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
 
+#include "Pawn.h"
+// draw pawn
 std::stringstream Pawn::draw()
 {
 	std::stringstream draw;

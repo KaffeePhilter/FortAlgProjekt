@@ -1,9 +1,18 @@
+/*
+******Projekt to solve the knight problem********
+*************************************************
+Authors:	Philipp Horlaender & Konrad Muench
+Course:		Computer Engineering
+Semsester:	WiSe 2018/2019
+**************************************************
+*/
+
 #include "Chessboard.h"
 #include "Knight.h"
 #include "King.h"
 #include "Pawn.h"
 
-
+//find the knight on the chessboard
 Field* Chessboard::findKnight()
 {
 	for (int i = 0; i < m_boardMap.size(); i++)
@@ -18,6 +27,7 @@ Field* Chessboard::findKnight()
 	}
 }
 
+//find the king on the chessboard
 Field* Chessboard::findKing()
 {
 	for (int i = 0; i < m_boardMap.size(); i++)
@@ -35,6 +45,7 @@ Field* Chessboard::findKing()
 	}
 }
 
+//initialize the chessboard with Board.txt file
 void Chessboard::initialize(std::ifstream& file)
 {
 	short posY = 0;
@@ -160,6 +171,7 @@ void Chessboard::initialize(std::ifstream& file)
 	file.close();
 }
 
+//draw the chessboard
 std::stringstream Chessboard::draw()
 {
 	std::stringstream draw;
@@ -172,6 +184,7 @@ std::stringstream Chessboard::draw()
 	return draw;
 }
 
+//function for rows and coloums
 BoardVector * Chessboard::getBoardVector()
 {
 	int row = 0;
