@@ -155,7 +155,7 @@ void UI::savePathOfGraph(const std::deque<Edge*>& edgeList)
 {
 	std::ofstream output;
 	std::stringstream path;
-	path << "Boards/SavedGraph/PathOfBoard" << m_choosenBoard << ".txt";
+	path << "SavedPaths/PathOfBoard" << m_choosenBoard << ".txt";
 	output.open(path.str());
 
 	for (Edge* e : edgeList)
