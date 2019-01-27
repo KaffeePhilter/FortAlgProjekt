@@ -56,6 +56,7 @@ void Chessboard::initialize(std::ifstream& file)
 		switch (i % 8)
 		{
 		case 1:
+			posY += 1;
 			posX = 'a';
 			break;
 		case 2:
@@ -77,7 +78,6 @@ void Chessboard::initialize(std::ifstream& file)
 			posX = 'g';
 			break;
 		case 0:
-			posY += 1;
 			posX = 'h';
 			break;
 		}
